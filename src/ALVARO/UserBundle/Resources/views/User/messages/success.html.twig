@@ -1,0 +1,7 @@
+   {# aqui llamo al mensaje a mostrar #}
+    {% for flashMessage in app.session.flashbag.get('mensaje')%}
+    	<div class="alert alert-success" role ="alert">
+    		<div class="container">{{ flashMessage }}</div>
+    	</div>
+    {% endfor %}
+	{# fin de llamada al mesaje #}

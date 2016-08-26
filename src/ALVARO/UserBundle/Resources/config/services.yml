@@ -1,0 +1,4 @@
+services:
+#    alvaro_user.example:
+#        class: ALVARO\UserBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

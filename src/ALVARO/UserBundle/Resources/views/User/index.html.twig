@@ -1,0 +1,76 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    {{ parent()}} {# parent es para que que el payout principal tenga en cuenta este layout y el que llama #}
+    {# aqui llamo al mensaje a mostrar lo llamo de un archivo que tendre todos los mensajes#}
+	{{ include('ALVAROUserBundle:User:messages/success.html.twig')}}
+	{# fin de llamada al mesaje #}
+	<div class="container">
+		<div class="col-md-12">
+			<div class="page-header margin-none">
+				<h2 class="padding-none">{% trans %}Users{% endtrans %}</h2>
+			</div>
+			<div class="table-responsive">
+				{# Total de registro en la DB con el comando pagination.getTotalItemCount #}
+				{% trans %} Total records: {% endtrans %} {{ pagination.getTotalItemCount }}
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							{# otra fotrma de traducir es con las llaves de twigs pasando el texto a traducir entre comillas o con trans y end trans#}
+                            {# crea la paginacion metodo knp_pagination_sortable para ordenar, se pasa la variabla pagination, se pasa el nombre de la cabecera y finalmente se envia el alias de la consulta dql y por ultimo el nombre del campo.#}
+                            <th>{{ knp_pagination_sortable(pagination, 'Username' | trans, 'u.username') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'First name' | trans, 'u.firstName') }}</th>
+							<th>{{ knp_pagination_sortable(pagination, 'Last name' | trans, 'u.lastName') }}</th>
+							<th>{{ knp_pagination_sortable(pagination, 'Email' | trans, 'u.email') }}</th>
+							<th>{{ knp_pagination_sortable(pagination, 'Role' | trans, 'u.role') }}</th>
+							<th>{{ knp_pagination_sortable(pagination, 'Created' | trans, 'u.createdAt') }}</th>
+							<th>{{ knp_pagination_sortable(pagination, 'Updated' | trans, 'u.updateAt') }}</th>
+                            <th>{% trans %}Actions{% endtrans %}</th>
+						</tr>
+					</thead>
+					<tbody>
+					    {% for user in pagination %}
+                            <tr data-id="{{ user.id }}">
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.firstName }}</td>
+                                <td>{{ user.lastName }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {% if user.role == 'ROLE_ADMIN' %}
+                                        <strong>
+                                        	{{ 'Administrator' | trans }}
+                                        </strong>
+                                    {% elseif user.role == 'ROLE_USER' %}
+                                        <strong>
+                                        	{% trans %} User {% endtrans %}
+                                        </strong>
+                                    {% endif %}
+                                </td>
+                                <td>{{ user.createdAt|date('d-m-Y H:i') }}</td>
+                                <td>{{ user.updateAt|date('d-m-Y H:i') }}</td>
+				                <td class="actions">
+			                        <a href="{{ path('alvaro_user_view', {id: user.id}) }}" class="btn btn-sm btn-info">
+			                            {{ 'View' | trans }}
+			                        </a>
+
+			                        <a href="{{ path('alvaro_user_edit', {id: user.id}) }}" class="btn btn-sm btn-primary">
+			                            {% trans %}Edit{% endtrans %}
+			                        </a>
+
+			                        <a href="#" class="btn btn-sm btn-danger btn-delete">
+			                            {% trans %}Delete{% endtrans %}
+			                        </a>
+				                </td>
+                            </tr>
+				        {% endfor %}
+					</tbody>
+				</table>
+				{# display de la navegacion de la paginacion#}
+				<div class"navigation">
+					{{ knp_pagination_render(pagination)}}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

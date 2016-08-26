@@ -1,0 +1,51 @@
+# Caminos Path para donde redreccinoa cuando selecciones una ruta.
+alvaro_user_index2:
+    path:     /hello/{name}
+    defaults: { _controller: ALVAROUserBundle:Default:index }
+
+alvaro_user_index:
+    path:       /user/index
+    defaults:   { _controller: ALVAROUserBundle:User:index }
+    
+alvaro_user_add:
+    path:       /user/add
+    defaults:   { _controller: ALVAROUserBundle:User:add }
+
+alvaro_user_create:
+    path:       /user/create
+    defaults:   { _controller: ALVAROUserBundle:User:create }
+    methods: POST
+    
+alvaro_user_edit:
+    path:       /user/edit/{id}
+    defaults:   { _controller: ALVAROUserBundle:User:edit }
+
+alvaro_user_update:
+    path:       /user/update/{id}
+    defaults:   { _controller: ALVAROUserBundle:User:update }
+    methods: [POST, PUT]
+    
+alvaro_user_view:
+    path:       /user/view/{id}
+    defaults:   { _controller: ALVAROUserBundle:User:view }
+    
+alvaro_user_delete:
+    path:       /user/delete/{id}
+    defaults:   { _controller: ALVAROUserBundle:User:delete }
+    methods: [POST, DELETE]
+
+# Camino que redirecciona a ADD si quiero acceder a CREATE por la direccion de URL
+alvaro_user_redirect_add:
+    path:       /user/create
+    defaults:
+        _controller: ALVAROUserBundle:User:add
+        path: /user/add
+        permanent: true
+
+# Camino que redirecciona a EDIT si quiero acceder a CREATE por la direccion de URL
+alvaro_user_redirect_edit:
+    path:       /user/update/{id}
+    defaults:
+        _controller: ALVAROUserBundle:User:edit
+        path: /user/edit/{id}
+        permanent: true
